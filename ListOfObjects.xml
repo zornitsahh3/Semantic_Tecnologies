@@ -36,6 +36,7 @@
         <rdfs:subClassOf rdf:resource="#CreativeWork"/>
     </owl:Class>
     <owl:Class rdf:about="#Genre"/>
+
     <owl:Class rdf:about="#ShortSong">
         <owl:equivalentClass>
             <owl:Restriction>
@@ -53,8 +54,42 @@
             </owl:Restriction>
         </owl:equivalentClass>
     </owl:Class>
-    <owl:Class rdf:about="#PopularSong"/>
-    <owl:Class rdf:about="#AwardWinningSong"/>
+
+<owl:Class rdf:about="#AwardWinningSong">
+    <owl:equivalentClass>
+        <owl:Restriction>
+            <owl:onProperty rdf:resource="#rating"/>
+            <owl:someValuesFrom>
+                <rdfs:Datatype>
+                    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+                    <owl:withRestrictions rdf:parseType="Collection">
+                        <rdf:Description>
+                            <xsd:maxExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.7</xsd:maxExclusive>
+                        </rdf:Description>
+                    </owl:withRestrictions>
+                </rdfs:Datatype>
+            </owl:someValuesFrom>
+        </owl:Restriction>
+    </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#PopularSong">
+    <owl:equivalentClass>
+        <owl:Restriction>
+            <owl:onProperty rdf:resource="#playCount"/>
+            <owl:someValuesFrom>
+                <rdfs:Datatype>
+                    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                    <owl:withRestrictions rdf:parseType="Collection">
+                        <rdf:Description>
+                            <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5000</xsd:minExclusive>
+                        </rdf:Description>
+                    </owl:withRestrictions>
+                </rdfs:Datatype>
+            </owl:someValuesFrom>
+        </owl:Restriction>
+    </owl:equivalentClass>
+</owl:Class>
 
     <!-- DATA PROPERTIES -->
     <owl:DatatypeProperty rdf:about="#duration">
@@ -93,7 +128,14 @@
     <!-- INDIVIDUALS EXAMPLES -->
     <owl:NamedIndividual rdf:about="#Me">
         <rdf:type rdf:resource="#Person"/>
-        <hasAward>None</hasAward>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#Mariya">
+        <rdf:type rdf:resource="#Person"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#Miya">
+        <rdf:type rdf:resource="#Person"/>
     </owl:NamedIndividual>
 
     <owl:NamedIndividual rdf:about="#Asake">
@@ -158,6 +200,34 @@
         <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">190</duration>
         <playCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3000</playCount>
         <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.9</rating>
+    </owl:NamedIndividual>
+
+        <owl:NamedIndividual rdf:about="#LoveMeNot">
+        <genreOf rdf:resource="#Pop"/>
+        <rdf:type rdf:resource="#Song"/>
+        <hasArtist rdf:resource="#RavynLenae"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">205</duration>
+        <playCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">22000</playCount>
+    </owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ChillAtmospheric">
+        <rdf:type rdf:resource="#Playlist"/>
+        <playlistGenre rdf:resource="#RnB"/>
+    </owl:NamedIndividual>
+
+ <owl:NamedIndividual rdf:about="#HeavyEnergetic">
+        <rdf:type rdf:resource="#Playlist"/>
+        <playlistGenre rdf:resource="#ProgressiveMetal"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#HipHopBeatDriven">
+        <rdf:type rdf:resource="#Playlist"/>
+        <playlistGenre rdf:resource="#HipHop"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#IndieDreamyExperimental">
+        <rdf:type rdf:resource="#Playlist"/>
+        <playlistGenre rdf:resource="#PsychedelicPop"/>
     </owl:NamedIndividual>
 
 </rdf:RDF>
