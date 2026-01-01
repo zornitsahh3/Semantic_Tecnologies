@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://example.org/myMusic#"
+     xml:base="http://example.org/myMusic"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#">
+
+    <owl:Ontology rdf:about="http://example.org/myMusicExtended">
+        <rdfs:comment>Extended ontology for 'My Music' microworld with classes, properties, axioms and SWRL rules (rules included as annotations)</rdfs:comment>
+    </owl:Ontology>
+
+    <!-- CLASSES -->
+    <owl:Class rdf:about="#Entity"/>
+    <owl:Class rdf:about="#Agent">
+        <rdfs:subClassOf rdf:resource="#Entity"/>
+    </owl:Class>
+    <owl:Class rdf:about="#CreativeWork">
+        <rdfs:subClassOf rdf:resource="#Entity"/>
+    </owl:Class>
+    <owl:Class rdf:about="#Person">
+        <rdfs:subClassOf rdf:resource="#Agent"/>
+    </owl:Class>
+    <owl:Class rdf:about="#Artist">
+        <rdfs:subClassOf rdf:resource="#Person"/>
+    </owl:Class>
+    <owl:Class rdf:about="#Song">
+        <rdfs:subClassOf rdf:resource="#CreativeWork"/>
+    </owl:Class>
+    <owl:Class rdf:about="#Album">
+        <rdfs:subClassOf rdf:resource="#CreativeWork"/>
+    </owl:Class>
+    <owl:Class rdf:about="#Playlist">
+        <rdfs:subClassOf rdf:resource="#CreativeWork"/>
+    </owl:Class>
+    <owl:Class rdf:about="#Genre"/>
+    <owl:Class rdf:about="#ShortSong">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#duration"/>
+                <owl:someValuesFrom>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</xsd:maxExclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    <owl:Class rdf:about="#PopularSong"/>
+    <owl:Class rdf:about="#AwardWinningSong"/>
+
+    <!-- DATA PROPERTIES -->
+    <owl:DatatypeProperty rdf:about="#duration">
+        <rdfs:domain rdf:resource="#Song"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#rating">
+        <rdfs:domain rdf:resource="#Song"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#playCount">
+        <rdfs:domain rdf:resource="#Song"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#hasAward">
+        <rdfs:domain rdf:resource="#Artist"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+
+    <!-- OBJECT PROPERTIES -->
+    <owl:ObjectProperty rdf:about="#hasArtist">
+        <rdfs:domain rdf:resource="#Song"/>
+        <rdfs:range rdf:resource="#Artist"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#artistOf">
+        <rdfs:domain rdf:resource="#Artist"/>
+        <rdfs:range rdf:resource="#Song"/>
+        <owl:inverseOf rdf:resource="#hasArtist"/>
+    </owl:ObjectProperty>
+
+    <!-- INDIVIDUALS EXAMPLES -->
+    <owl:NamedIndividual rdf:about="#Me">
+        <rdf:type rdf:resource="#Person"/>
+        <hasAward>None</hasAward>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#Asake">
+        <rdf:type rdf:resource="#Artist"/>
+        <hasAward>BET Rising</hasAward>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#AvengedSevenfold">
+        <rdf:type rdf:resource="#Artist"/>
+        <hasAward>Grammy for Best Rock Song</hasAward>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="#LonelyAtTheTop">
+        <rdf:type rdf:resource="#Song"/>
+        <hasArtist rdf:resource="#Asake"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">180</duration>
+        <playCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12000</playCount>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.7</rating>
+    </owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#GameOver">
+    <rdf:type rdf:resource="#Song"/>
+    <genreOf rdf:resource="#PsychedelicRock"/>
+    <hasArtist rdf:resource="#AvengedSevenfold"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">240</duration>
+        <playCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6000</playCount>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.2</rating>
+</owl:NamedIndividual>
+
+        <owl:NamedIndividual rdf:about="#TameImpala">
+        <rdf:type rdf:resource="#Artist"/>
+        <hasAward>Grammy for Best Dance Electronic Recording</hasAward>
+    </owl:NamedIndividual>
+
+        <owl:NamedIndividual rdf:about="#EndOfSummer">
+        <genreOf rdf:resource="#PsychedelicPop"/>
+        <rdf:type rdf:resource="#Song"/>
+        <hasArtist rdf:resource="#TameImpala"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">210</duration>
+        <playCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8000</playCount>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.5</rating>
+    </owl:NamedIndividual>
+
+        <owl:NamedIndividual rdf:about="#Gorillaz">
+        <rdf:type rdf:resource="#Artist"/>
+        <hasAward>Grammy for Best Pop Collaboration with Vocals</hasAward>
+    </owl:NamedIndividual>
+
+        <owl:NamedIndividual rdf:about="#TheManifesto">
+        <genreOf rdf:resource="#Electronic"/>
+        <rdf:type rdf:resource="#Song"/>
+        <hasArtist rdf:resource="#Gorillaz"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">260</duration>
+        <playCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15000</playCount>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.5</rating>
+    </owl:NamedIndividual>
+
+        <owl:NamedIndividual rdf:about="#JealousType">
+        <genreOf rdf:resource="#RnB"/>
+        <rdf:type rdf:resource="#Song"/>
+        <hasArtist rdf:resource="#DojaCat"/>
+        <duration rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">190</duration>
+        <playCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3000</playCount>
+        <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.9</rating>
+    </owl:NamedIndividual>
+
+</rdf:RDF>
